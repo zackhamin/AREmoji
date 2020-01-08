@@ -11,11 +11,25 @@ import ARKit
 
 class EmojiBlingViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+    @IBOutlet var sceneView: ARSCNView!
+    
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    let configuration = ARFaceTrackingConfiguration()
+    sceneView.session.run(configuration)
     }
-
+    
+    override func viewWillDissapear(_ animated:Bool){
+            super.viewWillDisappear(animated)
+            sceneView.session.pause()
+        }
+    override func viewDidLoad() {
+        guard ARFaceTrackingConfiguration.isSupported else {
+            fatalError("Face tracking is not supported on this device")
+        }
+    }
 
 }
 
